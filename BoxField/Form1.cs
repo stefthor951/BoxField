@@ -17,6 +17,7 @@ namespace BoxField
         public Form1()
         {
             InitializeComponent();
+            LoadDB();
         }
         public static List<Highscore> highscoreList = new List<Highscore>();
         public static List<int> scores = new List<int>();
@@ -53,6 +54,7 @@ namespace BoxField
                             newScore = reader.Value;
                             Highscore hs = new Highscore(newName, newScore);
                             highscoreList.Add(hs);
+                            scores.Add(Convert.ToInt16(hs.score));
                             items = 0;
                             break;
                     }

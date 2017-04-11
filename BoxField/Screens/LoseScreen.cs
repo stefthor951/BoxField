@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace BoxField.Screens
 {
@@ -15,6 +16,12 @@ namespace BoxField.Screens
         public LoseScreen()
         {
             InitializeComponent();
+            OnLoad();
+        }
+
+        private void OnLoad()
+        {
+            scoreOutputLabel.Text = "Final Score: " + Convert.ToString(Form1.scores[Form1.scores.Count - 1]);
         }
 
         private void restartButton_Click(object sender, EventArgs e)
@@ -37,7 +44,11 @@ namespace BoxField.Screens
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.scores[Form1.scores.Count - 1]));
+            Form1.highscoreList.Add(newScore);
 
+            saveButton.Enabled = false;
+            saveButton.Visible = false;
         }
     }
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        

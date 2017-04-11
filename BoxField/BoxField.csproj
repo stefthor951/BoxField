@@ -90,6 +90,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Screens\HighScoreScreen.resx">
+      <DependentUpon>HighScoreScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Screens\LoseScreen.resx">
       <DependentUpon>LoseScreen.cs</DependentUpon>
     </EmbeddedResource>

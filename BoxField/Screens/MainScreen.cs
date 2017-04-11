@@ -38,25 +38,18 @@ namespace BoxField.Screens
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            Application.Exit();
             XmlTextWriter writer = new XmlTextWriter("highscoreDB.xml", null);
 
             //Write the "CharacterList" element
-            writer.WriteStartElement("CharacterList");
-
-
+            writer.WriteStartElement("highscoreList");
             foreach (Highscore hs in Form1.highscoreList)
             {
                 //Start "character" element
-                writer.WriteStartElement("character");
+                writer.WriteStartElement("highscore");
 
                 //Write sub-elements
-                //writer.WriteElementString("name", c.name);
-                //writer.WriteElementString("class", c.charClass);
-                //writer.WriteElementString("dexterity", c.dexterity);
-                //writer.WriteElementString("strength", c.strength);
-                //writer.WriteElementString("vitality", c.vitality);
-                //writer.WriteElementString("perk", c.perk);
+                writer.WriteElementString("name", hs.name);
+                writer.WriteElementString("score", hs.score);
 
                 // end the "character" element
                 writer.WriteEndElement();
@@ -66,6 +59,8 @@ namespace BoxField.Screens
             writer.WriteEndElement();
 
             writer.Close();
+
+            Application.Exit();
         }
 
         private void MainScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
