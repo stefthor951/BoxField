@@ -31,6 +31,7 @@ namespace BoxField.Screens
 
             GameScreen gs = new GameScreen();
             f.Controls.Add(gs);
+            gs.Focus();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -40,6 +41,7 @@ namespace BoxField.Screens
 
             MainScreen ms = new MainScreen();
             f.Controls.Add(ms);
+            ms.Focus();
         }
 
         private void saveButton_Click(object sender, EventArgs e)

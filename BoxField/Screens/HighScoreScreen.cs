@@ -20,9 +20,18 @@ namespace BoxField.Screens
 
         private void OnLoad()
         {
+            Form1.scores.Sort();
             for (int i = 0; i < Form1.highscoreList.Count; i++)
             {
-                outputLabel.Text += Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
+                //top5Output.Text += Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
+                if (i < 5)
+                {
+                    top5Output.Text += Form1.scores[i] + "\n";
+                }
+                else
+                {
+                    next5Output.Text += Form1.scores[i] + "\n";
+                }
             }
         }
 

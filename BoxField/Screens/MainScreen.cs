@@ -25,6 +25,7 @@ namespace BoxField.Screens
 
             GameScreen gs = new GameScreen();
             f.Controls.Add(gs);
+            gs.Focus();
         }
 
         private void highScoreButton_Click(object sender, EventArgs e)
@@ -34,6 +35,7 @@ namespace BoxField.Screens
 
             HighScoreScreen hs = new HighScoreScreen();
             f.Controls.Add(hs);
+            hs.Focus();
         }
 
         private void exitButton_Click(object sender, EventArgs e)

@@ -145,6 +145,10 @@ namespace BoxField
             score++;
             if (score % 1000 == 0)
             {
+                foreach (Box b in boxList)
+                {
+                    b.speed++;
+                }
                 boxSpeed++;
                 if (newBoxCounter > 0)
                 {
