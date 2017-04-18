@@ -1,4 +1,7 @@
-﻿using System;
+﻿//Created by Stefan Thorburn in early to mid april
+//A 2d version of the flash game: "Cubefield"
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +24,7 @@ namespace BoxField
 
         public static List<Highscore> highscoreList = new List<Highscore>();
         public static List<int> scores = new List<int>();
+        public static int currentScore;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -54,9 +58,9 @@ namespace BoxField
                         //    break;
                         case 1:
                             newScore = reader.Value;
-                            Highscore hs = new Highscore(newName, newScore);
-                            highscoreList.Add(hs);
-                            scores.Add(Convert.ToInt16(hs.score));
+                            //Highscore hs = new Highscore(newName, newScore);
+                            //highscoreList.Add(hs);
+                            scores.Add(Convert.ToInt16(newScore));
                             items = 0;
                             break;
                     }

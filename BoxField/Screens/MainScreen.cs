@@ -40,18 +40,38 @@ namespace BoxField.Screens
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            //this code gets rid of any score that is not in the top 10
+            if (Form1.scores.Count > 10)
+            {
+                for (int i = Form1.scores.Count; i > 10; i--)
+                {
+                    Form1.scores.Remove(i - 1);
+                }
+            }
             XmlTextWriter writer = new XmlTextWriter("highscoreDB.xml", null);
 
             //Write the "CharacterList" element
             writer.WriteStartElement("highscoreList");
-            foreach (Highscore hs in Form1.highscoreList)
+            //foreach (Highscore hs in Form1.highscoreList)
+            //{
+            //    //Start "character" element
+            //    writer.WriteStartElement("highscore");
+
+            //    //Write sub-elements
+            //    writer.WriteElementString("name", hs.name);
+            //    writer.WriteElementString("score", hs.score);
+
+            //    // end the "character" element
+            //    writer.WriteEndElement();
+            //}
+            for (int i = 0; i < Form1.scores.Count; i++)
             {
                 //Start "character" element
                 writer.WriteStartElement("highscore");
 
                 //Write sub-elements
-                writer.WriteElementString("name", hs.name);
-                writer.WriteElementString("score", hs.score);
+                //writer.WriteElementString("name", ""); //This is the name aspect, not needed unless I reintroduce the name aspect of highscores
+                writer.WriteElementString("score", Convert.ToString(Form1.scores[i]));
 
                 // end the "character" element
                 writer.WriteEndElement();

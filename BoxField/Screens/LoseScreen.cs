@@ -21,7 +21,10 @@ namespace BoxField.Screens
 
         private void OnLoad()
         {
-            scoreOutputLabel.Text = "Final Score: " + Convert.ToString(Form1.scores[Form1.scores.Count - 1]);
+            scoreOutputLabel.Text = "Final Score: " + Convert.ToString(Form1.currentScore);
+
+            //Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.scores[Form1.scores.Count - 1]));
+            //Form1.highscoreList.Add(newScore);
         }
 
         private void restartButton_Click(object sender, EventArgs e)
@@ -46,9 +49,7 @@ namespace BoxField.Screens
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.scores[Form1.scores.Count - 1]));
-            Form1.highscoreList.Add(newScore);
-            Form1.scores.Add(Convert.ToInt16(newScore.score));
+            
 
             saveButton.Enabled = false;
             saveButton.Visible = false;

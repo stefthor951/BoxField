@@ -27,7 +27,7 @@ namespace BoxField
 
         //box values
         int boxSize, boxSpeed, newBoxCounter, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
-            counter, randomNumber, score, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
+            counter, randomNumber, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
             backColourRed, backColourGreen, backColourBlue;
         bool transitioning = false;
         SolidBrush playerBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
@@ -54,7 +54,7 @@ namespace BoxField
             boxSize = 20;
             boxSpeed = 7;
             newBoxCounter = 0;
-            score = 0;
+            Form1.currentScore = 0;
             randomSectionTimer = 800;
             columnSectionTimer = 0;
             colourCounterUp = 0;
@@ -142,8 +142,8 @@ namespace BoxField
                 b.Move();
             }
             newBoxCounter--;
-            score++;
-            if (score % 1000 == 0)
+            Form1.currentScore++;
+            if (Form1.currentScore % 1000 == 0 && Form1.currentScore < 7500) //the speed will gradually increase to a point, at which point it becomes a test of endurance
             {
                 scoreSound.Play();
                 foreach (Box b in boxList)
@@ -156,11 +156,11 @@ namespace BoxField
                     newBoxCounter--;
                 }
             }
-            if (score % 2500 == 0)
+            if (Form1.currentScore % 2500 == 0 && Form1.currentScore < 5001) //the player will gradually get faster to a point 
             {
                 player.speed++;
             }
-            scoreLabel.Text = "Score: " + score;
+            scoreLabel.Text = "Score: " + Form1.currentScore;
 
             #region creates boxes in the "random" phase
             if (randomSectionTimer > 0)
@@ -288,12 +288,13 @@ namespace BoxField
 
                 if (newBoxCounter <= 0)
                 {
-                    int counter2 = 0;
 
+                    //boxes in the column phase are the inverse of whatever colour the background was when the phase started
                     int redValue = 255 - backColourRed;
                     int greenValue = 255 - backColourGreen;
                     int blueValue = 255 - backColourBlue;
 
+                    //if the boxes are supposed to be moving left, their x value will decrease
                     if (direction == "left")
                     {
                         columnBoxLocation -= 5;
@@ -317,7 +318,7 @@ namespace BoxField
 
                     newBoxCounter = 4;
 
-                    if (columnBoxLocation - boxSize < 0 || columnBoxLocation + rightColumnBoxLocation + boxSize > this.Width)
+                    if (columnBoxLocation < 0 || columnBoxLocation + rightColumnBoxLocation + boxSize > this.Width)
                     {
                         counter = randomNumber;
 
@@ -353,7 +354,8 @@ namespace BoxField
 
             }
             #endregion
-            //TODO - remove box if it has gone of screen
+
+            //removes box after it has gone offscreen
             if (boxList.Count > 0)
             {
                 if (boxList[0].y > this.Height && boxList.Count > 0)
@@ -391,8 +393,23 @@ namespace BoxField
 
                 if (hasCollided)
                 {
+                    bool scoreAdded = false;
+
+                    for (int i = 0; i < Form1.scores.Count; i++)
+                    {
+                        if (Form1.currentScore > Form1.scores[i])
+                        {
+                            Form1.scores.Insert(i, Form1.currentScore);
+                            scoreAdded = true;
+                            i = Form1.scores.Count;//this is so that it will exit the for loop if this code executes
+                        }
+
+                    }
+                    if (scoreAdded == false)
+                    {
+                        Form1.scores.Add(Form1.currentScore);
+                    }
                     
-                    Form1.scores.Add(score);
                     gameLoop.Stop();
 
                     //plays a sound effect once the player gets hit / loses
@@ -400,7 +417,7 @@ namespace BoxField
                     soundplayer.Play();
 
                     //waits for the sound effect to finish before continuing on to the next screen
-                    Thread.Sleep(1500);
+                    Thread.Sleep(2000);
 
                     Form f = this.FindForm();
                     f.Controls.Remove(this);
@@ -411,6 +428,7 @@ namespace BoxField
             }
             #endregion
             Refresh();
+
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
@@ -425,19 +443,6 @@ namespace BoxField
             }
             SolidBrush playerBrush = new SolidBrush(Color.FromArgb(player.colourRed, player.colourGreen, player.colourBlue));
             e.Graphics.FillRectangle(playerBrush, player.x, player.y, player.size, player.size);
-
-            //if (gameLoop.Enabled == false)
-            //{
-            //    Pen blackPen = new Pen(Color.Black, 5);
-
-            //    for (int i = player.x - 300; i < player.x - 50; i++)
-            //    {
-            //        e.Graphics.DrawEllipse(blackPen, i, player.y, 600 - i, 600 - i);
-            //        Refresh();
-            //        Thread.Sleep(50);
-            //    }
-
-            //}
         }
     }
 }

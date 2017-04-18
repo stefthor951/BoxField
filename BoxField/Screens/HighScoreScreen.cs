@@ -20,15 +20,14 @@ namespace BoxField.Screens
 
         private void OnLoad()
         {
-            //Form1.scores;
-            for (int i = 0; i < Form1.highscoreList.Count; i++)
+            for (int i = 0; i < Form1.scores.Count; i++)
             {
                 //top5Output.Text += Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
                 if (i < 5)
                 {
                     top5Output.Text += Form1.scores[i] + "\n";
                 }
-                else
+                else if (i > 5 && i < 10)
                 {
                     next5Output.Text += Form1.scores[i] + "\n";
                 }
@@ -42,15 +41,6 @@ namespace BoxField.Screens
 
             MainScreen ms = new MainScreen();
             f.Controls.Add(ms);
-        }
-
-        private void ScoreSort()
-        {
-            Form1.scores.Sort();
-            for (int i = 0; i < Form1.highscoreList.Count; i++)
-            {
-                //Form1.highscoreList[i].score =
-            }
         }
     }
 }
