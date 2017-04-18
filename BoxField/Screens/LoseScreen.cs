@@ -48,6 +48,7 @@ namespace BoxField.Screens
         {
             Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.scores[Form1.scores.Count - 1]));
             Form1.highscoreList.Add(newScore);
+            Form1.scores.Add(Convert.ToInt16(newScore.score));
 
             saveButton.Enabled = false;
             saveButton.Visible = false;

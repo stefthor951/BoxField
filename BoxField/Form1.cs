@@ -17,16 +17,18 @@ namespace BoxField
         public Form1()
         {
             InitializeComponent();
-            LoadDB();
         }
+
         public static List<Highscore> highscoreList = new List<Highscore>();
         public static List<int> scores = new List<int>();
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LoadDB();
             MainScreen ms = new MainScreen();
             this.Controls.Add(ms);
         }
+
         public void LoadDB()
         {
             string newScore = "";
@@ -47,10 +49,10 @@ namespace BoxField
                 {
                     switch (items)
                     {
+                        //case 1:
+                        //    newName = reader.Value;
+                        //    break;
                         case 1:
-                            newName = reader.Value;
-                            break;
-                        case 2:
                             newScore = reader.Value;
                             Highscore hs = new Highscore(newName, newScore);
                             highscoreList.Add(hs);

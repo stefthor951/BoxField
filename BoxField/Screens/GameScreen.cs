@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using BoxField.Screens;
+using System.Media;
 
 namespace BoxField
 {
@@ -20,11 +21,12 @@ namespace BoxField
         //used to draw boxes on screen
         //SolidBrush boxBrush = new SolidBrush(Color.White);
 
+
         //TODO - create a list to hold a column of boxes        
         List<Box> boxList = new List<Box>();
 
         //box values
-        int boxSize, boxSpeed, newBoxCounter, columnSectionTimer, randomSectionTimer, columnBoxLocation, 
+        int boxSize, boxSpeed, newBoxCounter, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
             counter, randomNumber, score, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
             backColourRed, backColourGreen, backColourBlue;
         bool transitioning = false;
@@ -34,6 +36,8 @@ namespace BoxField
         string boxColour;
         Random randnum = new Random();
         Box player;
+
+        SoundPlayer scoreSound = new SoundPlayer(Properties.Resources._170147_2578041_lq);
 
         public GameScreen()
         {
@@ -57,11 +61,7 @@ namespace BoxField
             colourCounterDown = 255;
             randomNumber = randnum.Next(5, 51);
             transitionCounterThing = 0;
-            //transitioning = true; //remove after
-
-            //Box b1 = new Box(5, 5, boxSize, boxSpeed, 255, 255, 255);
-            //boxList.Add(b1);
-
+            rightColumnBoxLocation = 150;
 
             player = new Box(this.Width / 2 - boxSize / 2, this.Height - 100, boxSize, 8, 0, 0, 0);
         }
@@ -102,7 +102,7 @@ namespace BoxField
 
         private void GameScreen_KeyUp(object sender, KeyEventArgs e)
         {
-            
+
             //player 1 button releases
             switch (e.KeyCode)
             {
@@ -145,6 +145,7 @@ namespace BoxField
             score++;
             if (score % 1000 == 0)
             {
+                scoreSound.Play();
                 foreach (Box b in boxList)
                 {
                     b.speed++;
@@ -166,7 +167,7 @@ namespace BoxField
             {
                 randomSectionTimer--;
 
-                if (randomSectionTimer < 1800) //waits for a few timer ticks as a buffer between phases
+                if (randomSectionTimer < 600) //waits for a few timer ticks as a buffer between phases
                 {
                     colourCounterUp++;
                     colourCounterDown--;
@@ -183,37 +184,6 @@ namespace BoxField
                         Box b = new Box(randnum.Next(0, this.Width * Convert.ToInt16(0.75)), -boxSize, boxSize, boxSpeed, 255, 255, 255);
                         boxList.Add(b);
                         newBoxCounter = 5;
-                        //this.BackColor = Color.FromArgb(randnum.Next(0, 256), randnum.Next(0, 256), randnum.Next(0, 256));
-                        //if (backColour == "red")
-                        //{
-                        //    if (colourCounterDown <= 0)
-                        //    {
-                        //        backColour = "blue";
-                        //        colourCounterDown = 255;
-                        //        colourCounterUp = 0;
-                        //    }
-                        //    this.BackColor = Color.FromArgb(colourCounterDown, colourCounterUp, 0);
-                        //}
-                        //if (backColour == "blue")
-                        //{
-                        //    if (colourCounterDown <= 0)
-                        //    {
-                        //        backColour = "green";
-                        //        colourCounterDown = 255;
-                        //        colourCounterUp = 0;
-                        //    }
-                        //    this.BackColor = Color.FromArgb(0, colourCounterDown, colourCounterUp);
-                        //}
-                        //if (backColour == "green")
-                        //{
-                        //    if (colourCounterDown <= 0)
-                        //    {
-                        //        backColour = "red";
-                        //        colourCounterDown = 255;
-                        //        colourCounterUp = 0;
-                        //    }
-                        //    this.BackColor = Color.FromArgb(colourCounterUp, 0, colourCounterDown);
-                        //}
 
                     }
                     if (backColour == "red")
@@ -228,7 +198,7 @@ namespace BoxField
                             colourCounterDown = 255;
                             colourCounterUp = 0;
                         }
-                        
+
                     }
                     if (backColour == "green")
                     {
@@ -242,7 +212,7 @@ namespace BoxField
                             colourCounterDown = 255;
                             colourCounterUp = 0;
                         }
-                        
+
                     }
                     if (backColour == "blue")
                     {
@@ -256,7 +226,7 @@ namespace BoxField
                             colourCounterDown = 255;
                             colourCounterUp = 0;
                         }
-                       
+
                     }
                 }
 
@@ -264,7 +234,7 @@ namespace BoxField
                 {
                     transitioning = true; ; //1875 ticks is equal to 15 seconds at 125 fps
                     columnBoxLocation = randnum.Next(5, this.Width - 150 - boxSize);
-                    
+
                 }
             }
             #endregion
@@ -287,9 +257,11 @@ namespace BoxField
 
                 if (newBoxCounter <= 0)
                 {
+                    //Gets the inverse of the background colour, for guarenteed aesthetic pleasing-ness
                     int redValue = 255 - backColourRed;
                     int greenValue = 255 - backColourGreen;
                     int blueValue = 255 - backColourBlue;
+
                     Box b1 = new Box(columnBoxLocation - generalDistanceRequired + transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
                     boxList.Add(b1);
                     Box b2 = new Box(columnBoxLocation + 150 + generalDistanceRequired - transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
@@ -300,7 +272,7 @@ namespace BoxField
                 if (transitionCounterThing >= generalDistanceRequired)
                 {
                     transitioning = false;
-                    columnSectionTimer = 1000; //change back to 600 after
+                    columnSectionTimer = randnum.Next(350, 1251); //change back to 600 after
                     transitionCounterThing = 0;
                 }
             }
@@ -310,122 +282,75 @@ namespace BoxField
             else if (columnSectionTimer > 0)
             {
                 columnSectionTimer--;
-                boxColourUp+=5;
-                boxColourDown-=5;
+                boxColourUp += 5;
+                boxColourDown -= 5;
 
-                //if (columnSectionTimer < ) //waits for a few timer ticks as a buffer between phases 
+
+                if (newBoxCounter <= 0)
                 {
-                    if (newBoxCounter <= 0)
-                    {
-                        int counter2 = 0;
+                    int counter2 = 0;
 
-                        int redValue = 255 - backColourRed;
-                        int greenValue = 255 - backColourGreen;
-                        int blueValue = 255 - backColourBlue;
+                    int redValue = 255 - backColourRed;
+                    int greenValue = 255 - backColourGreen;
+                    int blueValue = 255 - backColourBlue;
+
+                    if (direction == "left")
+                    {
+                        columnBoxLocation -= 5;
+
+                        if (columnBoxLocation <= 0)
+                        {
+                            direction = "right";
+                        }
+                        counter++;
+                    }
+
+                    else if (direction == "right")
+                    {
+                        columnBoxLocation += 5;
+                        if (columnBoxLocation + rightColumnBoxLocation >= this.Width - boxSize)
+                        {
+                            direction = "left";
+                        }
+                        counter++;
+                    }
+
+                    newBoxCounter = 4;
+
+                    if (columnBoxLocation - boxSize < 0 || columnBoxLocation + rightColumnBoxLocation + boxSize > this.Width)
+                    {
+                        counter = randomNumber;
+
+                    }
+                    if (counter == randomNumber)
+                    {
+                        randomNumber = randnum.Next(10, 51);
+                        counter = 0;
 
                         if (direction == "left")
                         {
-                            columnBoxLocation -= 5;
-                            counter++;
+                            direction = "right";
                         }
-
                         else if (direction == "right")
                         {
-                            columnBoxLocation += 5;
-                            counter++;
+                            direction = "left";
                         }
-
-                        newBoxCounter = 4;
-
-                        if (columnBoxLocation - boxSize < 0 || columnBoxLocation + 150 + boxSize > this.Width)
-                        {
-                            counter = randomNumber;
-
-                        }
-                        if (counter == randomNumber)
-                        {
-                            randomNumber = randnum.Next(5, 51);
-                            counter = 0;
-
-                            if (direction == "left")
-                            {
-                                direction = "right";
-                            }
-                            else if (direction == "right")
-                            {
-                                direction = "left";
-                            }
-                        }
-                        if (counter2 == 0)
-                        {
-
-                        }
-
-                        Box b1 = new Box(columnBoxLocation, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
-                        boxList.Add(b1);
-                        Box b2 = new Box(columnBoxLocation + 150, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
-                        boxList.Add(b2);
-
-                        
                     }
 
-                    //if (boxColour == "red")
-                    //{
 
-                    //    if (boxColourDown <= 0)
-                    //    {
-                    //        boxColour = "green";
-                    //        boxColourDown = 255;
-                    //        boxColourUp = 0;
-                    //    }
-
-                    //    foreach (Box b in boxList)
-                    //    {
-                    //        b.colourRed = boxColourDown;
-                    //        b.colourGreen = boxColourUp;
-                    //        b.colourBlue = 0;
-                    //    }
-
-                    //}
-                    //if (boxColour == "green")
-                    //{
-
-                    //    if (boxColourDown <= 0)
-                    //    {
-                    //        boxColour = "blue";
-                    //        boxColourDown = 255;
-                    //        boxColourUp = 0;
-                    //    }
-                    //    foreach (Box b in boxList)
-                    //    {
-                    //        b.colourRed = 0;
-                    //        b.colourGreen = boxColourDown;
-                    //        b.colourBlue = boxColourUp;
-                    //    }
-
-                    //}
-                    //if (boxColour == "blue")
-                    //{
-                    //    if (boxColourDown <= 0)
-                    //    {
-                    //        boxColour = "red";
-                    //        boxColourDown = 255;
-                    //        boxColourUp = 0;
-                    //    }
-                    //    foreach (Box b in boxList)
-                    //    {
-                    //        b.colourRed = boxColourUp;
-                    //        b.colourGreen = 0;
-                    //        b.colourBlue = boxColourDown;
-                    //    }
-                    //}
+                    Box b1 = new Box(columnBoxLocation, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
+                    boxList.Add(b1);
+                    Box b2 = new Box(columnBoxLocation + rightColumnBoxLocation, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
+                    boxList.Add(b2);
 
 
-                    if (columnSectionTimer <= 0)
-                    {
-                        randomSectionTimer = 675;//change back to675 after
-                    }
                 }
+
+                if (columnSectionTimer <= 0)
+                {
+                    randomSectionTimer = 675; //the timer is greater than the max timer for the randomsection so that there is a delay between the two phases
+                }
+
             }
             #endregion
             //TODO - remove box if it has gone of screen
@@ -466,8 +391,16 @@ namespace BoxField
 
                 if (hasCollided)
                 {
+                    
                     Form1.scores.Add(score);
                     gameLoop.Stop();
+
+                    //plays a sound effect once the player gets hit / loses
+                    SoundPlayer soundplayer = new SoundPlayer(Properties.Resources.smb_mariodie);
+                    soundplayer.Play();
+
+                    //waits for the sound effect to finish before continuing on to the next screen
+                    Thread.Sleep(1500);
 
                     Form f = this.FindForm();
                     f.Controls.Remove(this);
@@ -487,11 +420,24 @@ namespace BoxField
             {
                 SolidBrush boxBrush = new SolidBrush(Color.FromArgb(b.colourRed, b.colourGreen, b.colourBlue));
                 e.Graphics.FillRectangle(boxBrush, b.x, b.y, b.size, b.size);
-				Pen outlinePen = new Pen(Color.Black, 2);
-				e.Graphics.DrawRectangle(outlinePen, b.x, b.y, b.size, b.size);
-			}
+                Pen outlinePen = new Pen(Color.Black, 2);
+                e.Graphics.DrawRectangle(outlinePen, b.x, b.y, b.size, b.size);
+            }
             SolidBrush playerBrush = new SolidBrush(Color.FromArgb(player.colourRed, player.colourGreen, player.colourBlue));
             e.Graphics.FillRectangle(playerBrush, player.x, player.y, player.size, player.size);
+
+            //if (gameLoop.Enabled == false)
+            //{
+            //    Pen blackPen = new Pen(Color.Black, 5);
+
+            //    for (int i = player.x - 300; i < player.x - 50; i++)
+            //    {
+            //        e.Graphics.DrawEllipse(blackPen, i, player.y, 600 - i, 600 - i);
+            //        Refresh();
+            //        Thread.Sleep(50);
+            //    }
+
+            //}
         }
     }
 }
