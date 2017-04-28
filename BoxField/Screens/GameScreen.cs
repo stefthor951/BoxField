@@ -316,6 +316,8 @@ namespace BoxField
                         counter++;
                     }
 
+                    
+
                     newBoxCounter = 4;
 
                     if (columnBoxLocation < 0 || columnBoxLocation + rightColumnBoxLocation + boxSize > this.Width)
