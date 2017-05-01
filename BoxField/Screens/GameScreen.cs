@@ -397,11 +397,14 @@ namespace BoxField
                 {
                     bool scoreAdded = false;
 
-                    for (int i = 0; i < Convert.ToInt16(Form1.highscoreList[i].score); i++)
+                    for (int i = 0; i < Convert.ToInt16(Form1.scores.Count); i++)
                     {
                         if (Form1.currentScore > Convert.ToInt16(Form1.highscoreList[i].score))
                         {
                             Form1.scores.Insert(i, Form1.currentScore);
+
+                            Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
+                            Form1.highscoreList.Insert(i, hs);
 
                             scoreAdded = true;
                             i = Form1.scores.Count;//this is so that it will exit the for loop if this code executes
@@ -411,6 +414,8 @@ namespace BoxField
                     if (scoreAdded == false)
                     {
                         Form1.scores.Add(Form1.currentScore);
+                        Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
+                        Form1.highscoreList.Add(hs);
                     }
                     
                     gameLoop.Stop();

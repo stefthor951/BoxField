@@ -23,8 +23,8 @@ namespace BoxField.Screens
         {
             scoreOutputLabel.Text = "Final Score: " + Convert.ToString(Form1.currentScore);
 
-            Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.currentScore));
-            Form1.highscoreList.Add(newScore);
+            //Highscore newScore = new Highscore(nameInput.Text, Convert.ToString(Form1.currentScore));
+            //Form1.highscoreList.Add(newScore);
         }
 
         private void restartButton_Click(object sender, EventArgs e)
