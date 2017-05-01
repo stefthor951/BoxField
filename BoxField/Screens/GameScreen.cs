@@ -397,11 +397,12 @@ namespace BoxField
                 {
                     bool scoreAdded = false;
 
-                    for (int i = 0; i < Form1.scores.Count; i++)
+                    for (int i = 0; i < Convert.ToInt16(Form1.highscoreList[i].score); i++)
                     {
-                        if (Form1.currentScore > Form1.scores[i])
+                        if (Form1.currentScore > Convert.ToInt16(Form1.highscoreList[i].score))
                         {
                             Form1.scores.Insert(i, Form1.currentScore);
+
                             scoreAdded = true;
                             i = Form1.scores.Count;//this is so that it will exit the for loop if this code executes
                         }
