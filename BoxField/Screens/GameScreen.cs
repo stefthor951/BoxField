@@ -404,6 +404,7 @@ namespace BoxField
                             Form1.scores.Insert(i, Form1.currentScore);
 
                             Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
+                            
                             Form1.highscoreList.Insert(i, hs);
 
                             scoreAdded = true;
