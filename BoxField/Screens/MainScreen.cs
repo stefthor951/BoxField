@@ -42,6 +42,7 @@ namespace BoxField.Screens
         {
             Highscore hs = new Highscore(null, null);
             hs.saveScores(Form1.highscoreList);
+            hs.saveRecentscores(Form1.recentScoreList);
 
             ////this code gets rid of any score that is not in the top 10
             //if (Form1.scores.Count > 10)

@@ -23,6 +23,7 @@ namespace BoxField
         }
 
         public static List<Highscore> highscoreList = new List<Highscore>();
+        public static List<Highscore> recentScoreList = new List<Highscore>();
         public static List<int> scores = new List<int>();
         public static int currentScore;
 
@@ -35,6 +36,7 @@ namespace BoxField
 
         public void LoadDB()
         {
+            #region loading highscores
             XmlDocument doc = new XmlDocument();
             doc.Load("highscoreDB.xml");
 
@@ -52,12 +54,39 @@ namespace BoxField
                     if (grandChild.Name == "score")
                     {
                         hs.score = grandChild.InnerText;
-                        scores.Add(Convert.ToInt16(child.InnerText));
+                        //scores.Add(Convert.ToInt16(child.InnerText));
                     }
                 }
 
                 highscoreList.Add(hs);
             }
+            #endregion
+
+            #region loading recent scores
+            //XmlDocument doc = new XmlDocument();
+            doc.Load("recentScoreDB.xml");
+
+            //XmlNode parent;
+            parent = doc.DocumentElement;
+            foreach (XmlNode child in parent.ChildNodes)
+            {
+                Highscore hs = new BoxField.Highscore(null, null);
+                foreach (XmlNode grandChild in child.ChildNodes)
+                {
+                    if (grandChild.Name == "name")
+                    {
+                        hs.name = grandChild.InnerText;
+                    }
+                    if (grandChild.Name == "score")
+                    {
+                        hs.score = grandChild.InnerText;
+                        scores.Add(Convert.ToInt16(child.InnerText));
+                    }
+                }
+
+                recentScoreList.Add(hs);
+            }
+            #endregion
 
             //string newScore = "";
             //string newName = "";
