@@ -28,44 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.startButton = new System.Windows.Forms.Button();
-            this.highScoreButton = new System.Windows.Forms.Button();
-            this.exitButton = new System.Windows.Forms.Button();
+            this.startButton = new System.Windows.Forms.Label();
+            this.highscoreButton = new System.Windows.Forms.Label();
+            this.exitButton = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startButton
             // 
             this.startButton.AutoSize = true;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startButton.Location = new System.Drawing.Point(340, 133);
+            this.startButton.ForeColor = System.Drawing.Color.Red;
+            this.startButton.Location = new System.Drawing.Point(404, 169);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(220, 74);
-            this.startButton.TabIndex = 1;
+            this.startButton.Size = new System.Drawing.Size(72, 31);
+            this.startButton.TabIndex = 5;
             this.startButton.Text = "Start";
-            this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // highScoreButton
+            // highscoreButton
             // 
-            this.highScoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.highScoreButton.Location = new System.Drawing.Point(340, 213);
-            this.highScoreButton.Name = "highScoreButton";
-            this.highScoreButton.Size = new System.Drawing.Size(220, 74);
-            this.highScoreButton.TabIndex = 3;
-            this.highScoreButton.Text = "Highscore";
-            this.highScoreButton.UseVisualStyleBackColor = true;
-            this.highScoreButton.Click += new System.EventHandler(this.highScoreButton_Click);
+            this.highscoreButton.AutoSize = true;
+            this.highscoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.highscoreButton.Location = new System.Drawing.Point(375, 235);
+            this.highscoreButton.Name = "highscoreButton";
+            this.highscoreButton.Size = new System.Drawing.Size(151, 31);
+            this.highscoreButton.TabIndex = 6;
+            this.highscoreButton.Text = "Highscores";
             // 
             // exitButton
             // 
+            this.exitButton.AutoSize = true;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(340, 293);
+            this.exitButton.Location = new System.Drawing.Point(417, 301);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(220, 74);
-            this.exitButton.TabIndex = 4;
+            this.exitButton.Size = new System.Drawing.Size(59, 31);
+            this.exitButton.TabIndex = 7;
             this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // MainScreen
             // 
@@ -73,11 +70,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.Controls.Add(this.exitButton);
-            this.Controls.Add(this.highScoreButton);
+            this.Controls.Add(this.highscoreButton);
             this.Controls.Add(this.startButton);
             this.Name = "MainScreen";
             this.Size = new System.Drawing.Size(900, 500);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainScreen_KeyDown);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.MainScreen_PreviewKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -86,8 +82,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button startButton;
-        private System.Windows.Forms.Button highScoreButton;
-        private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Label startButton;
+        private System.Windows.Forms.Label highscoreButton;
+        private System.Windows.Forms.Label exitButton;
     }
 }

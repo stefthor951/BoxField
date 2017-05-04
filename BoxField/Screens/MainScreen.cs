@@ -13,104 +13,96 @@ namespace BoxField.Screens
 {
     public partial class MainScreen : UserControl
     {
+        int index = 0;
+        int lastIndex = 0;
+
         public MainScreen()
         {
             InitializeComponent();
         }
 
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            Form f = this.FindForm();
-            f.Controls.Remove(this);
-
-            GameScreen gs = new GameScreen();
-            f.Controls.Add(gs);
-            gs.Focus();
-        }
-
-        private void highScoreButton_Click(object sender, EventArgs e)
-        {
-            Form f = this.FindForm();
-            f.Controls.Remove(this);
-
-            HighScoreScreen hs = new HighScoreScreen();
-            f.Controls.Add(hs);
-            hs.Focus();
-        }
-
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            Highscore hs = new Highscore(null, null);
-            hs.saveScores(Form1.highscoreList);
-            hs.saveRecentscores(Form1.recentScoreList);
-
-            ////this code gets rid of any score that is not in the top 10
-            //if (Form1.scores.Count > 10)
-            //{
-            //    for (int i = Form1.scores.Count; i > 10; i--)
-            //    {
-            //        Form1.scores.Remove(i - 1);
-            //    }
-            //}
-            //XmlTextWriter writer = new XmlTextWriter("highscoreDB.xml", null);
-
-            ////Write the "CharacterList" element
-            //writer.WriteStartElement("highscoreList");
-            ////foreach (Highscore hs in Form1.highscoreList)
-            ////{
-            ////    //Start "character" element
-            ////    writer.WriteStartElement("highscore");
-
-            ////    //Write sub-elements
-            ////    writer.WriteElementString("name", hs.name);
-            ////    writer.WriteElementString("score", hs.score);
-
-            ////    // end the "character" element
-            ////    writer.WriteEndElement();
-            ////}
-            //for (int i = 0; i < Form1.scores.Count; i++)
-            //{
-            //    //Start "character" element
-            //    writer.WriteStartElement("highscore");
-
-            //    //Write sub-elements
-            //    //writer.WriteElementString("name", ""); //This is the name aspect, not needed unless I reintroduce the name aspect of highscores
-            //    writer.WriteElementString("score", Convert.ToString(Form1.scores[i]));
-
-            //    // end the "character" element
-            //    writer.WriteEndElement();
-            //}
-
-            //// end the "CharacterList" element
-            //writer.WriteEndElement();
-
-            //writer.Close();
-
-            Application.Exit();
-        }
-
         private void MainScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            lastIndex = index;
+            Form f = this.FindForm();
             switch (e.KeyCode)
             {
-                case Keys.Q:
+                case Keys.Up:
+                    if (index != 0)
+                    {
+                        index--;
+                    }
+                    else
+                    {
+                        index = 2;
+                    }
+                    break;
+                case Keys.Down:
+                    if (index != 2)
+                    {
+                        index++;
+                    }
+                    else
+                    {
+                        index = 0;
+                    }
+                    break;
+                case Keys.Escape:
                     Application.Exit();
-                        break;
+                    break;
+                case Keys.Space:
+                    switch (index)
+                    {
+                        case 0:
+                            GameScreen gs = new GameScreen();
+                            f.Controls.Add(gs);
+                            f.Controls.Remove(this);
+                            gs.Focus();
+
+                            gs.Location = new Point((f.Width - gs.Width) / 2, (f.Height - gs.Height) / 2);
+                            break;
+                        case 1:
+                            HighScoreScreen hs = new HighScoreScreen();
+                            f.Controls.Add(hs);
+                            f.Controls.Remove(this);
+                            hs.Focus();
+
+                            hs.Location = new Point((f.Width - hs.Width) / 2, (f.Height - hs.Height) / 2);
+                            break;
+                        case 2:
+                            Application.Exit();
+                            break;
+                    }
+                    break;
                 default:
                     break;
             }
-        }
 
-        private void MainScreen_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
+            switch (lastIndex)
             {
-                case Keys.Q:
-                    Application.Exit();
+                case 0:
+                    startButton.ForeColor = Color.Black;
                     break;
-                default:
+                case 1:
+                    highscoreButton.ForeColor = Color.Black;
                     break;
-            }   
+                case 2:
+                    exitButton.ForeColor = Color.Black;
+                    break;
+            }
+
+            switch (index)
+            {
+                case 0:
+                    startButton.ForeColor = Color.Red;
+                    break;
+                case 1:
+                    highscoreButton.ForeColor = Color.Red;
+                    break;
+                case 2:
+                    exitButton.ForeColor = Color.Red;
+                    break;
+            }
         }
     }
 }
