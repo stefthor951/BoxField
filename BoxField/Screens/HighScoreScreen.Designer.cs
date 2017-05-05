@@ -28,24 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.exitButton = new System.Windows.Forms.Button();
             this.top5Output = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.next5Output = new System.Windows.Forms.Label();
+            this.menuButton = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // exitButton
-            // 
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.exitButton.Location = new System.Drawing.Point(88, 378);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(220, 74);
-            this.exitButton.TabIndex = 3;
-            this.exitButton.Text = "Main Menu";
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // top5Output
             // 
@@ -99,30 +88,42 @@
             this.next5Output.Size = new System.Drawing.Size(400, 235);
             this.next5Output.TabIndex = 9;
             // 
+            // menuButton
+            // 
+            this.menuButton.AutoSize = true;
+            this.menuButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuButton.ForeColor = System.Drawing.Color.Red;
+            this.menuButton.Location = new System.Drawing.Point(87, 401);
+            this.menuButton.Name = "menuButton";
+            this.menuButton.Size = new System.Drawing.Size(146, 31);
+            this.menuButton.TabIndex = 10;
+            this.menuButton.Text = "Main Menu";
+            // 
             // HighScoreScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.menuButton);
             this.Controls.Add(this.next5Output);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.top5Output);
-            this.Controls.Add(this.exitButton);
             this.Name = "HighScoreScreen";
             this.Size = new System.Drawing.Size(900, 500);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.HighScoreScreen_PreviewKeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Label top5Output;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label next5Output;
+        private System.Windows.Forms.Label menuButton;
     }
 }

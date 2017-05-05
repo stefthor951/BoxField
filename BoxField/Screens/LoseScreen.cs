@@ -61,6 +61,15 @@ namespace BoxField.Screens
                 case Keys.Space:
                     spaceDown = true;
                     break;
+                case Keys.Escape:
+                    Form f = this.FindForm();
+                    f.Controls.Remove(this);
+
+                    MainScreen ms = new MainScreen();
+                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
+                    f.Controls.Add(ms);
+                    ms.Focus();
+                    break;
                 default:
                     break;
             }
@@ -139,7 +148,8 @@ namespace BoxField.Screens
                     if (spaceDown == true)
                     {
                         Highscore hs = new Highscore(nameText1.Text + nameText2.Text + nameText3.Text, Convert.ToString(Form1.currentScore));
-                        hs.save();
+                        hs.save(hs);
+                        hs.saveScores(Form1.highscoreList);
                         // Goes to the game screen
                         Form f = this.FindForm();
                         GameScreen gs = new GameScreen();
@@ -158,7 +168,8 @@ namespace BoxField.Screens
                     if (spaceDown == true)
                     {
                         Highscore hs = new Highscore(nameText1.Text + nameText2.Text + nameText3.Text, Convert.ToString(Form1.currentScore));
-                        hs.save();
+                        hs.save(hs);
+                        hs.saveScores(Form1.highscoreList);
                         // Goes to the main menu screen
                         Form f = this.FindForm();
                         MainScreen ms = new MainScreen();

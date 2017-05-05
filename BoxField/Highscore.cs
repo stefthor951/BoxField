@@ -17,10 +17,10 @@ namespace BoxField
             score = _score;
         }
 
-        public void save()
+        public void save(Highscore hs)
         {
             bool scoreAdded = false;
-            Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore)); //TODO when highscore screen is finished change null for nameLabel.text (or something like that)
+            //Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore)); //TODO when highscore screen is finished change null for nameLabel.text (or something like that)
 
             for (int i = 0; i < Convert.ToInt16(Form1.highscoreList.Count); i++)
             {

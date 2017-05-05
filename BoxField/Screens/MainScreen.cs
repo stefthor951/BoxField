@@ -70,6 +70,7 @@ namespace BoxField.Screens
                             hs.Location = new Point((f.Width - hs.Width) / 2, (f.Height - hs.Height) / 2);
                             break;
                         case 2:
+
                             Application.Exit();
                             break;
                     }

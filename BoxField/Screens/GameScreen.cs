@@ -130,6 +130,15 @@ namespace BoxField
                 case Keys.Space:
                     spaceDown = false;
                     break;
+                case Keys.Escape:
+                    Form f = this.FindForm();
+                    f.Controls.Remove(this);
+
+                    MainScreen ms = new MainScreen();
+                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
+                    f.Controls.Add(ms);
+                    ms.Focus();
+                    break;
                 default:
                     break;
             }
@@ -160,7 +169,7 @@ namespace BoxField
             {
                 player.speed++;
             }
-            scoreLabel.Text = "Score: " + Form1.currentScore;
+            scoreLabel.Text = "Score: " + (Form1.currentScore + 1); //adding 1 to sync up the displayed score with the actual score
 
             #region creates boxes in the "random" phase
             if (randomSectionTimer > 0)
@@ -301,7 +310,7 @@ namespace BoxField
 
                         if (columnBoxLocation <= 0)
                         {
-                            direction = "right";
+                            counter = randomNumber; //changes the direction the column is shifting
                         }
                         counter++;
                     }
@@ -311,7 +320,7 @@ namespace BoxField
                         columnBoxLocation += 5;
                         if (columnBoxLocation + rightColumnBoxLocation >= this.Width - boxSize)
                         {
-                            direction = "left";
+                            counter = randomNumber; //changes the direction the column is shifting
                         }
                         counter++;
                     }
@@ -429,10 +438,12 @@ namespace BoxField
                     Thread.Sleep(2000);
 
                     Form f = this.FindForm();
-                    f.Controls.Remove(this);
 
                     LoseScreen ls = new LoseScreen();
+
                     f.Controls.Add(ls);
+                    ls.Location = new Point((this.Width - ls.Width) / 2, (this.Height - ls.Height) / 2);
+                    f.Controls.Remove(this);
                 }
             }
             #endregion

@@ -26,12 +26,12 @@ namespace BoxField.Screens
                 if (i < 5)
                 {
                     //top5Output.Text += Form1.scores[i] + "\n";
-                    top5Output.Text += (i+1) + ". " + Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
+                    top5Output.Text += (i + 1) + ". " + Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
                 }
                 else if (i >= 5 && i < 10)
                 {
                     //next5Output.Text += Form1.scores[i] + "\n";
-                    next5Output.Text += (i+1) + ". " + Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
+                    next5Output.Text += (i + 1) + ". " + Form1.highscoreList[i].name + "     " + Form1.highscoreList[i].score + "\n";
                 }
             }
         }
@@ -42,7 +42,32 @@ namespace BoxField.Screens
             f.Controls.Remove(this);
 
             MainScreen ms = new MainScreen();
+            ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
             f.Controls.Add(ms);
+            ms.Focus();
+        }
+
+        private void HighScoreScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            Form f = this.FindForm();
+            f.Controls.Remove(this);
+
+            MainScreen ms = new MainScreen();
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    
+                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
+                    f.Controls.Add(ms);
+                    ms.Focus();
+                    break;
+                case Keys.Escape:
+                    
+                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
+                    f.Controls.Add(ms);
+                    ms.Focus();
+                    break;
+            }
         }
     }
 }

@@ -36,9 +36,10 @@
             // startButton
             // 
             this.startButton.AutoSize = true;
+            this.startButton.BackColor = System.Drawing.Color.White;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.ForeColor = System.Drawing.Color.Red;
-            this.startButton.Location = new System.Drawing.Point(404, 169);
+            this.startButton.Location = new System.Drawing.Point(59, 303);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(72, 31);
             this.startButton.TabIndex = 5;
@@ -47,8 +48,9 @@
             // highscoreButton
             // 
             this.highscoreButton.AutoSize = true;
+            this.highscoreButton.BackColor = System.Drawing.Color.White;
             this.highscoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.highscoreButton.Location = new System.Drawing.Point(375, 235);
+            this.highscoreButton.Location = new System.Drawing.Point(30, 369);
             this.highscoreButton.Name = "highscoreButton";
             this.highscoreButton.Size = new System.Drawing.Size(151, 31);
             this.highscoreButton.TabIndex = 6;
@@ -57,8 +59,9 @@
             // exitButton
             // 
             this.exitButton.AutoSize = true;
+            this.exitButton.BackColor = System.Drawing.Color.White;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(417, 301);
+            this.exitButton.Location = new System.Drawing.Point(72, 435);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(59, 31);
             this.exitButton.TabIndex = 7;
@@ -69,6 +72,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.highscoreButton);
             this.Controls.Add(this.startButton);

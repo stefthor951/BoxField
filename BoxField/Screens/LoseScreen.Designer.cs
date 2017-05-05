@@ -39,13 +39,13 @@ namespace BoxField.Screens
             // 
             // scoreOutputLabel
             // 
-            this.scoreOutputLabel.AutoSize = true;
             this.scoreOutputLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scoreOutputLabel.Location = new System.Drawing.Point(254, 263);
+            this.scoreOutputLabel.Location = new System.Drawing.Point(287, 260);
             this.scoreOutputLabel.Name = "scoreOutputLabel";
-            this.scoreOutputLabel.Size = new System.Drawing.Size(171, 33);
+            this.scoreOutputLabel.Size = new System.Drawing.Size(327, 39);
             this.scoreOutputLabel.TabIndex = 3;
             this.scoreOutputLabel.Text = "Final Score:";
+            this.scoreOutputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
@@ -113,6 +113,7 @@ namespace BoxField.Screens
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.menuButton);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.nameText3);
