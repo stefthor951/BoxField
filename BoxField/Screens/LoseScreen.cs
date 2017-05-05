@@ -14,7 +14,9 @@ namespace BoxField.Screens
     public partial class LoseScreen : UserControl
     {
         Boolean leftArrowDown, downArrowDown, rightArrowDown, upArrowDown, spaceDown;
-        int index1, index2, index3, selected, lastSelected;
+        int index1, index2, index3;
+        int selected = 0;
+        int lastSelected = 0;
 
         private void LoseScreen_KeyUp(object sender, KeyEventArgs e)
         {

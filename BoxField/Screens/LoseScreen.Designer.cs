@@ -62,30 +62,32 @@ namespace BoxField.Screens
             // nameText1
             // 
             this.nameText1.AutoSize = true;
-            this.nameText1.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText1.Font = new System.Drawing.Font("Kozuka Gothic Pro M", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.nameText1.ForeColor = System.Drawing.Color.Red;
             this.nameText1.Location = new System.Drawing.Point(338, 107);
             this.nameText1.Name = "nameText1";
-            this.nameText1.Size = new System.Drawing.Size(75, 73);
+            this.nameText1.Size = new System.Drawing.Size(82, 88);
             this.nameText1.TabIndex = 7;
             this.nameText1.Text = "A";
+            this.nameText1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // nameText2
             // 
             this.nameText2.AutoSize = true;
-            this.nameText2.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText2.Font = new System.Drawing.Font("Kozuka Gothic Pro B", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameText2.Location = new System.Drawing.Point(413, 107);
             this.nameText2.Name = "nameText2";
-            this.nameText2.Size = new System.Drawing.Size(75, 73);
+            this.nameText2.Size = new System.Drawing.Size(81, 91);
             this.nameText2.TabIndex = 8;
             this.nameText2.Text = "A";
             // 
             // nameText3
             // 
             this.nameText3.AutoSize = true;
-            this.nameText3.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameText3.Font = new System.Drawing.Font("Kozuka Gothic Pro B", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameText3.Location = new System.Drawing.Point(488, 107);
             this.nameText3.Name = "nameText3";
-            this.nameText3.Size = new System.Drawing.Size(75, 73);
+            this.nameText3.Size = new System.Drawing.Size(81, 91);
             this.nameText3.TabIndex = 9;
             this.nameText3.Text = "A";
             // 

@@ -148,6 +148,9 @@
   <ItemGroup>
     <None Include="Resources\170147_2578041-lq.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cubefield_resized.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

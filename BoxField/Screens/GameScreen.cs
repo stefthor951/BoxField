@@ -16,7 +16,7 @@ namespace BoxField
     public partial class GameScreen : UserControl
     {
         //player1 button control keys - DO NOT CHANGE
-        Boolean leftArrowDown, downArrowDown, rightArrowDown, upArrowDown, bDown, nDown, mDown, spaceDown;
+        Boolean leftArrowDown, rightArrowDown;
 
         //used to draw boxes on screen
         //SolidBrush boxBrush = new SolidBrush(Color.White);
@@ -28,12 +28,11 @@ namespace BoxField
         //box values
         int boxSize, boxSpeed, newBoxCounter, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
             counter, randomNumber, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
-            backColourRed, backColourGreen, backColourBlue;
+            backColourRed, backColourGreen, backColourBlue, phaseBuffer, bufferTicks;
         bool transitioning = false;
         SolidBrush playerBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
         string direction = "left";
         string backColour = "red";
-        string boxColour;
         Random randnum = new Random();
         Box player;
 
@@ -56,6 +55,8 @@ namespace BoxField
             newBoxCounter = 0;
             Form1.currentScore = 0;
             randomSectionTimer = 800;
+            bufferTicks = 75;
+            phaseBuffer = 700;
             columnSectionTimer = 0;
             colourCounterUp = 0;
             colourCounterDown = 255;
@@ -74,26 +75,18 @@ namespace BoxField
                 case Keys.Left:
                     leftArrowDown = true;
                     break;
-                case Keys.Down:
-                    downArrowDown = true;
-                    break;
                 case Keys.Right:
                     rightArrowDown = true;
                     break;
-                case Keys.Up:
-                    upArrowDown = true;
-                    break;
-                case Keys.B:
-                    bDown = true;
-                    break;
-                case Keys.N:
-                    nDown = true;
-                    break;
-                case Keys.M:
-                    mDown = true;
-                    break;
-                case Keys.Space:
-                    spaceDown = true;
+                case Keys.Escape:
+                    gameLoop.Stop();
+                    Form f = this.FindForm();
+                    f.Controls.Remove(this);
+
+                    MainScreen ms = new MainScreen();
+                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
+                    f.Controls.Add(ms);
+                    ms.Focus();
                     break;
                 default:
                     break;
@@ -109,35 +102,8 @@ namespace BoxField
                 case Keys.Left:
                     leftArrowDown = false;
                     break;
-                case Keys.Down:
-                    downArrowDown = false;
-                    break;
                 case Keys.Right:
                     rightArrowDown = false;
-                    break;
-                case Keys.Up:
-                    upArrowDown = false;
-                    break;
-                case Keys.B:
-                    bDown = false;
-                    break;
-                case Keys.N:
-                    nDown = false;
-                    break;
-                case Keys.M:
-                    mDown = false;
-                    break;
-                case Keys.Space:
-                    spaceDown = false;
-                    break;
-                case Keys.Escape:
-                    Form f = this.FindForm();
-                    f.Controls.Remove(this);
-
-                    MainScreen ms = new MainScreen();
-                    ms.Location = new Point((f.Width - ms.Width) / 2, (f.Height - ms.Height) / 2);
-                    f.Controls.Add(ms);
-                    ms.Focus();
                     break;
                 default:
                     break;
@@ -152,9 +118,14 @@ namespace BoxField
             }
             newBoxCounter--;
             Form1.currentScore++;
-            if (Form1.currentScore % 1000 == 0 && Form1.currentScore < 7500) //the speed will gradually increase to a point, at which point it becomes a test of endurance
+
+            if (Form1.currentScore % 1000 == 0)
             {
                 scoreSound.Play();
+            }
+            #region difficulty scaling
+            if (Form1.currentScore % 1000 == 0 && Form1.currentScore <= 7000) //the speed will gradually increase to a point, at which point it becomes a test of endurance
+            {
                 foreach (Box b in boxList)
                 {
                     b.speed++;
@@ -164,11 +135,14 @@ namespace BoxField
                 {
                     newBoxCounter--;
                 }
+                rightColumnBoxLocation -= 5;
             }
-            if (Form1.currentScore % 2500 == 0 && Form1.currentScore < 5001) //the player will gradually get faster to a point 
+            if (Form1.currentScore % 2500 == 0 && Form1.currentScore <= 5000) //the player will gradually get faster to a point 
             {
                 player.speed++;
             }
+            #endregion
+
             scoreLabel.Text = "Score: " + (Form1.currentScore + 1); //adding 1 to sync up the displayed score with the actual score
 
             #region creates boxes in the "random" phase
@@ -176,7 +150,7 @@ namespace BoxField
             {
                 randomSectionTimer--;
 
-                if (randomSectionTimer < 600) //waits for a few timer ticks as a buffer between phases
+                if (randomSectionTimer < phaseBuffer) //waits for a few timer ticks as a buffer between phases
                 {
                     colourCounterUp++;
                     colourCounterDown--;
@@ -281,7 +255,7 @@ namespace BoxField
                 if (transitionCounterThing >= generalDistanceRequired)
                 {
                     transitioning = false;
-                    columnSectionTimer = randnum.Next(350, 1251); //change back to 600 after
+                    columnSectionTimer = randnum.Next(500, 1251); //change back to 600 after
                     transitionCounterThing = 0;
                 }
             }
@@ -325,7 +299,7 @@ namespace BoxField
                         counter++;
                     }
 
-                    
+
 
                     newBoxCounter = 4;
 
@@ -360,7 +334,8 @@ namespace BoxField
 
                 if (columnSectionTimer <= 0)
                 {
-                    randomSectionTimer = 675; //the timer is greater than the max timer for the randomsection so that there is a delay between the two phases
+                    randomSectionTimer = randnum.Next(500, 1501); //the timer is greater than the max timer for the randomsection so that there is a delay between the two phases
+                    phaseBuffer = randomSectionTimer - bufferTicks;
                 }
 
             }
@@ -413,7 +388,7 @@ namespace BoxField
                             Form1.scores.Insert(i, Form1.currentScore);
 
                             Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
-                            
+
                             Form1.highscoreList.Insert(i, hs);
 
                             scoreAdded = true;
@@ -427,7 +402,7 @@ namespace BoxField
                         Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
                         Form1.highscoreList.Add(hs);
                     }
-                    
+
                     gameLoop.Stop();
 
                     //plays a sound effect once the player gets hit / loses
@@ -438,12 +413,13 @@ namespace BoxField
                     Thread.Sleep(2000);
 
                     Form f = this.FindForm();
+                    f.Controls.Remove(this);
 
                     LoseScreen ls = new LoseScreen();
+                    ls.Location = new Point((f.Width - ls.Width) / 2, (f.Height - ls.Height) / 2);
 
                     f.Controls.Add(ls);
-                    ls.Location = new Point((this.Width - ls.Width) / 2, (this.Height - ls.Height) / 2);
-                    f.Controls.Remove(this);
+
                 }
             }
             #endregion

@@ -31,6 +31,7 @@
             this.startButton = new System.Windows.Forms.Label();
             this.highscoreButton = new System.Windows.Forms.Label();
             this.exitButton = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startButton
@@ -39,7 +40,7 @@
             this.startButton.BackColor = System.Drawing.Color.White;
             this.startButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.startButton.ForeColor = System.Drawing.Color.Red;
-            this.startButton.Location = new System.Drawing.Point(59, 303);
+            this.startButton.Location = new System.Drawing.Point(25, 21);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(72, 31);
             this.startButton.TabIndex = 5;
@@ -50,7 +51,7 @@
             this.highscoreButton.AutoSize = true;
             this.highscoreButton.BackColor = System.Drawing.Color.White;
             this.highscoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.highscoreButton.Location = new System.Drawing.Point(30, 369);
+            this.highscoreButton.Location = new System.Drawing.Point(25, 82);
             this.highscoreButton.Name = "highscoreButton";
             this.highscoreButton.Size = new System.Drawing.Size(151, 31);
             this.highscoreButton.TabIndex = 6;
@@ -61,11 +62,21 @@
             this.exitButton.AutoSize = true;
             this.exitButton.BackColor = System.Drawing.Color.White;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(72, 435);
+            this.exitButton.Location = new System.Drawing.Point(25, 143);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(59, 31);
             this.exitButton.TabIndex = 7;
             this.exitButton.Text = "Exit";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Kozuka Gothic Pro B", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(285, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(330, 91);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "BOXFIELD";
             // 
             // MainScreen
             // 
@@ -73,6 +84,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::BoxField.Properties.Resources.cubefield_resized;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.highscoreButton);
             this.Controls.Add(this.startButton);
@@ -89,5 +102,6 @@
         private System.Windows.Forms.Label startButton;
         private System.Windows.Forms.Label highscoreButton;
         private System.Windows.Forms.Label exitButton;
+        private System.Windows.Forms.Label label1;
     }
 }
