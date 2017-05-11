@@ -105,43 +105,73 @@ namespace BoxField.Screens
                 case 0:
                     nameText1.ForeColor = Color.Red;
 
-                    if (upArrowDown == true && index1 < 25)
+                    if (upArrowDown == true)// && index1 < 25)
                     {
                         index1++;
+
+                        if (index1 > 25)
+                        {
+                            index1 = 0;
+                        }
                     }
 
-                    if (downArrowDown == true && index1 > 0)
+                    if (downArrowDown == true)// && index1 > 0)
                     {
                         index1--;
+
+                        if (index1 < 0)
+                        {
+                            index1 = 25;
+                        }
                     }
                     break;
 
                 case 1:
                     nameText2.ForeColor = Color.Red;
 
-                    if (upArrowDown == true && index2 < 25)
+                    if (upArrowDown == true)// && index2 < 25)
                     {
                         index2++;
+
+                        if (index2 > 25)
+                        {
+                            index2 = 0;
+                        }
                     }
 
-                    if (downArrowDown == true && index2 > 0)
+                    if (downArrowDown == true)// && index2 > 0)
                     {
                         index2--;
+
+                        if (index2 < 0)
+                        {
+                            index2 = 25;
+                        }
                     }
                     break;
 
                 case 2:
                     nameText3.ForeColor = Color.Red;
 
-                    if (upArrowDown == true && index3 < 25)
+                    if (upArrowDown == true)// && index3 < 25)
                     {
                         index3++;
+
+                        if (index3 > 25)
+                        {
+                            index3 = 0;
+                        }
                     }
 
-                    if (downArrowDown == true && index3 > 0)
+                    if (downArrowDown == true)// && index3 > 0)
                     {
                         index3--;
-                    }
+
+                            if (index3 < 0)
+                            {
+                                index3 = 25;
+                            }
+                        }
                     break;
 
                 case 3:

@@ -26,7 +26,7 @@ namespace BoxField
         List<Box> boxList = new List<Box>();
 
         //box values
-        int boxSize, boxSpeed, newBoxCounter, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
+        int boxSize, boxSpeed, newBoxCounter, boxCountdown, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
             counter, randomNumber, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
             backColourRed, backColourGreen, backColourBlue, phaseBuffer, bufferTicks;
         bool transitioning = false;
@@ -51,8 +51,9 @@ namespace BoxField
         {
             //TODO - set game start values
             boxSize = 20;
-            boxSpeed = 7;
-            newBoxCounter = 0;
+            boxSpeed = 6;
+            newBoxCounter = 8;
+            boxCountdown = 0;
             Form1.currentScore = 0;
             randomSectionTimer = 800;
             bufferTicks = 75;
@@ -62,7 +63,7 @@ namespace BoxField
             colourCounterDown = 255;
             randomNumber = randnum.Next(5, 51);
             transitionCounterThing = 0;
-            rightColumnBoxLocation = 150;
+            rightColumnBoxLocation = 160;
 
             player = new Box(this.Width / 2 - boxSize / 2, this.Height - 100, boxSize, 8, 0, 0, 0);
         }
@@ -72,6 +73,12 @@ namespace BoxField
             //player 1 button presses
             switch (e.KeyCode)
             {
+                case Keys.A:
+                    leftArrowDown = true;
+                    break;
+                case Keys.D:
+                    rightArrowDown = true;
+                    break;
                 case Keys.Left:
                     leftArrowDown = true;
                     break;
@@ -99,6 +106,12 @@ namespace BoxField
             //player 1 button releases
             switch (e.KeyCode)
             {
+                case Keys.A:
+                    leftArrowDown = false;
+                    break;
+                case Keys.D:
+                    rightArrowDown = false;
+                    break;
                 case Keys.Left:
                     leftArrowDown = false;
                     break;
@@ -116,7 +129,7 @@ namespace BoxField
             {
                 b.Move();
             }
-            newBoxCounter--;
+            boxCountdown--;
             Form1.currentScore++;
 
             if (Form1.currentScore % 1000 == 0)
@@ -162,11 +175,11 @@ namespace BoxField
                     //{
                     //    colourCounterUp = 0;
                     //}
-                    if (newBoxCounter <= 0)
+                    if (boxCountdown <= 0)
                     {
                         Box b = new Box(randnum.Next(0, this.Width * Convert.ToInt16(0.75)), -boxSize, boxSize, boxSpeed, 255, 255, 255);
                         boxList.Add(b);
-                        newBoxCounter = 5;
+                        boxCountdown = newBoxCounter;
 
                     }
                     if (backColour == "red")
@@ -238,7 +251,7 @@ namespace BoxField
                     generalDistanceRequired = rightDistanceRequired;
                 }
 
-                if (newBoxCounter <= 0)
+                if (boxCountdown <= 0)
                 {
                     //Gets the inverse of the background colour, for guarenteed aesthetic pleasing-ness
                     int redValue = 255 - backColourRed;
@@ -250,7 +263,7 @@ namespace BoxField
                     Box b2 = new Box(columnBoxLocation + 150 + generalDistanceRequired - transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
                     boxList.Add(b2);
                     transitionCounterThing += boxSize;
-                    newBoxCounter = 6;
+                    boxCountdown = newBoxCounter;
                 }
                 if (transitionCounterThing >= generalDistanceRequired)
                 {
@@ -269,7 +282,7 @@ namespace BoxField
                 boxColourDown -= 5;
 
 
-                if (newBoxCounter <= 0)
+                if (boxCountdown <= 0)
                 {
 
                     //boxes in the column phase are the inverse of whatever colour the background was when the phase started
@@ -301,7 +314,7 @@ namespace BoxField
 
 
 
-                    newBoxCounter = 4;
+                    boxCountdown = newBoxCounter;
 
                     if (columnBoxLocation < 0 || columnBoxLocation + rightColumnBoxLocation + boxSize > this.Width)
                     {
@@ -379,38 +392,16 @@ namespace BoxField
 
                 if (hasCollided)
                 {
-                    bool scoreAdded = false;
-
-                    for (int i = 0; i < Convert.ToInt16(Form1.scores.Count); i++)
-                    {
-                        if (Form1.currentScore > Convert.ToInt16(Form1.highscoreList[i].score))
-                        {
-                            Form1.scores.Insert(i, Form1.currentScore);
-
-                            Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
-
-                            Form1.highscoreList.Insert(i, hs);
-
-                            scoreAdded = true;
-                            i = Form1.scores.Count;//this is so that it will exit the for loop if this code executes
-                        }
-
-                    }
-                    if (scoreAdded == false)
-                    {
-                        Form1.scores.Add(Form1.currentScore);
-                        Highscore hs = new Highscore(null, Convert.ToString(Form1.currentScore));
-                        Form1.highscoreList.Add(hs);
-                    }
 
                     gameLoop.Stop();
+                    Refresh();
 
                     //plays a sound effect once the player gets hit / loses
                     SoundPlayer soundplayer = new SoundPlayer(Properties.Resources.smb_mariodie);
                     soundplayer.Play();
 
                     //waits for the sound effect to finish before continuing on to the next screen
-                    Thread.Sleep(2000);
+                    Thread.Sleep(500);
 
                     Form f = this.FindForm();
                     f.Controls.Remove(this);

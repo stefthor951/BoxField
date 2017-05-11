@@ -39,13 +39,12 @@
             // top5Output
             // 
             this.top5Output.BackColor = System.Drawing.Color.Black;
-            this.top5Output.Font = new System.Drawing.Font("Courier New", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.top5Output.Font = new System.Drawing.Font("Courier New", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.top5Output.ForeColor = System.Drawing.Color.White;
             this.top5Output.Location = new System.Drawing.Point(50, 111);
             this.top5Output.Name = "top5Output";
             this.top5Output.Size = new System.Drawing.Size(400, 235);
             this.top5Output.TabIndex = 4;
-            this.top5Output.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
@@ -82,13 +81,12 @@
             // next5Output
             // 
             this.next5Output.BackColor = System.Drawing.Color.Black;
-            this.next5Output.Font = new System.Drawing.Font("Courier New", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.next5Output.Font = new System.Drawing.Font("Courier New", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.next5Output.ForeColor = System.Drawing.Color.White;
             this.next5Output.Location = new System.Drawing.Point(450, 111);
             this.next5Output.Name = "next5Output";
             this.next5Output.Size = new System.Drawing.Size(400, 235);
             this.next5Output.TabIndex = 9;
-            this.next5Output.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuButton
             // 

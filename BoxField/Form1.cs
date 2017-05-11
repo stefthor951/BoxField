@@ -43,7 +43,7 @@ namespace BoxField
             XmlDocument doc = new XmlDocument();
             doc.Load("highscoreDB.xml");
 
-            XmlNode parent;
+              XmlNode parent;
             parent = doc.DocumentElement;
             foreach (XmlNode child in parent.ChildNodes)
             {
@@ -57,7 +57,6 @@ namespace BoxField
                     if (grandChild.Name == "score")
                     {
                         hs.score = grandChild.InnerText;
-                        //scores.Add(Convert.ToInt16(child.InnerText));
                     }
                 }
 
