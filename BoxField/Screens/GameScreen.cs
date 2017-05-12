@@ -394,6 +394,7 @@ namespace BoxField
                 {
 
                     gameLoop.Stop();
+                    gameLoop.
                     Refresh();
 
                     //plays a sound effect once the player gets hit / loses
