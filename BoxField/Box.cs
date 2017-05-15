@@ -9,7 +9,8 @@ namespace BoxField
 {
     class Box
     {
-        public int x, y, size, speed, colourRed, colourGreen, colourBlue;
+        public int size, colourRed, colourGreen, colourBlue;
+        public float x, y, speed;
 
         /// <summary>
         /// Constructor method for the boxes
@@ -18,7 +19,7 @@ namespace BoxField
         /// <param name="_y">sets the initial y coordinate</param>
         /// <param name="_size">sets the initial speed</param>
         /// <param name="_speed">sets the initial speed</param>
-        public Box(int _x, int _y, int _size, int _speed, int _colourRed, int _colourGreen, int _colourBlue)
+        public Box(float _x, float _y, int _size, float _speed, int _colourRed, int _colourGreen, int _colourBlue)
         {
             x = _x;
             y = _y;
@@ -50,8 +51,8 @@ namespace BoxField
 
         public Boolean Collision (Box b)
         {
-            Rectangle boxRec = new Rectangle(b.x, b.y, b.size, b.size);
-            Rectangle playerRec = new Rectangle(x, y, size, size);
+            Rectangle boxRec = new Rectangle(Convert.ToInt16(b.x), Convert.ToInt16(b.y), b.size, b.size);
+            Rectangle playerRec = new Rectangle(Convert.ToInt16(x), Convert.ToInt16(y), size, size);
 
             return boxRec.IntersectsWith(playerRec);
         }

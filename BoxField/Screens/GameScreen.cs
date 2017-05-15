@@ -29,6 +29,8 @@ namespace BoxField
         int boxSize, boxSpeed, newBoxCounter, boxCountdown, columnSectionTimer, randomSectionTimer, columnBoxLocation, rightColumnBoxLocation,
             counter, randomNumber, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
             backColourRed, backColourGreen, backColourBlue, phaseBuffer, bufferTicks;
+        float maxPlayerSpeed;
+        double currentPlayerSpeed;
         bool transitioning = false;
         SolidBrush playerBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
         string direction = "left";
@@ -61,11 +63,13 @@ namespace BoxField
             columnSectionTimer = 0;
             colourCounterUp = 0;
             colourCounterDown = 255;
+            currentPlayerSpeed = 1;
+            maxPlayerSpeed = 8;
             randomNumber = randnum.Next(5, 51);
             transitionCounterThing = 0;
             rightColumnBoxLocation = 160;
 
-            player = new Box(this.Width / 2 - boxSize / 2, this.Height - 100, boxSize, 8, 0, 0, 0);
+            player = new Box(this.Width / 2 - boxSize / 2, this.Height - 100, boxSize, 1, 0, 0, 0);
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -152,7 +156,7 @@ namespace BoxField
             }
             if (Form1.currentScore % 2500 == 0 && Form1.currentScore <= 5000) //the player will gradually get faster to a point 
             {
-                player.speed++;
+                maxPlayerSpeed++;
             }
             #endregion
 
@@ -367,6 +371,15 @@ namespace BoxField
             if (leftArrowDown)
             {
                 player.Move("left");
+                if (currentPlayerSpeed < maxPlayerSpeed) //&& (Form1.currentScore / 2) % 2 == 0)
+                {
+                    currentPlayerSpeed *= 1.2;
+                    if (currentPlayerSpeed > maxPlayerSpeed)
+                    {
+                        currentPlayerSpeed = maxPlayerSpeed;
+                    }
+                    player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
+                }
 
                 if (player.x < 0) //if the player is too far to the left
                 {
@@ -377,10 +390,24 @@ namespace BoxField
             if (rightArrowDown)
             {
                 player.Move("right");
+                if (currentPlayerSpeed < maxPlayerSpeed) //&& (Form1.currentScore / 2) % 2 == 0)
+                {
+                    currentPlayerSpeed *= 1.2;
+                    if (currentPlayerSpeed > maxPlayerSpeed)
+                    {
+                        currentPlayerSpeed = maxPlayerSpeed;
+                    }
+                    player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
+                }
+
                 if (player.x > this.Width - player.size) //if the player is too far to the right
                 {
                     player.x -= player.speed;
                 }
+            }
+            else if (rightArrowDown == false && leftArrowDown == false)
+            {
+                currentPlayerSpeed = 1;
             }
 
             //Check for collision between player and boxes
@@ -394,8 +421,8 @@ namespace BoxField
                 {
 
                     gameLoop.Stop();
-                    gameLoop.
                     Refresh();
+
 
                     //plays a sound effect once the player gets hit / loses
                     SoundPlayer soundplayer = new SoundPlayer(Properties.Resources.smb_mariodie);
