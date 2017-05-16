@@ -20,7 +20,8 @@ namespace BoxField
 
         //used to draw boxes on screen
         //SolidBrush boxBrush = new SolidBrush(Color.White);
-
+        SolidBrush playerBrush;
+        Pen outlinePen = new Pen(Color.Black, 2);
 
         //TODO - create a list to hold a column of boxes        
         List<Box> boxList = new List<Box>();
@@ -30,9 +31,9 @@ namespace BoxField
             counter, randomNumber, transitionCounterThing, colourCounterUp, colourCounterDown, boxColourUp, boxColourDown,
             backColourRed, backColourGreen, backColourBlue, phaseBuffer, bufferTicks;
         float maxPlayerSpeed;
-        double currentPlayerSpeed;
+        float currentPlayerSpeed;
         bool transitioning = false;
-        SolidBrush playerBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
+        //SolidBrush playerBrush = new SolidBrush(Color.FromArgb(0, 0, 0));
         string direction = "left";
         string backColour = "red";
         Random randnum = new Random();
@@ -63,13 +64,15 @@ namespace BoxField
             columnSectionTimer = 0;
             colourCounterUp = 0;
             colourCounterDown = 255;
-            currentPlayerSpeed = 1;
+            currentPlayerSpeed = 2;
             maxPlayerSpeed = 8;
             randomNumber = randnum.Next(5, 51);
             transitionCounterThing = 0;
             rightColumnBoxLocation = 160;
 
             player = new Box(this.Width / 2 - boxSize / 2, this.Height - 100, boxSize, 1, 0, 0, 0);
+            playerBrush = new SolidBrush(Color.FromArgb(player.colourRed, player.colourGreen, player.colourBlue));
+
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -233,7 +236,7 @@ namespace BoxField
                 if (randomSectionTimer <= 0)
                 {
                     transitioning = true; ; //1875 ticks is equal to 15 seconds at 125 fps
-                    columnBoxLocation = randnum.Next(5, this.Width - 150 - boxSize);
+                    columnBoxLocation = randnum.Next(5, this.Width - rightColumnBoxLocation - boxSize);
 
                 }
             }
@@ -244,7 +247,7 @@ namespace BoxField
             {
 
                 int leftDistanceRequired = columnBoxLocation;
-                int rightDistanceRequired = this.Width - columnBoxLocation - 150 - boxSize;
+                int rightDistanceRequired = this.Width - columnBoxLocation - rightColumnBoxLocation - boxSize;
                 int generalDistanceRequired;
                 if (leftDistanceRequired > rightDistanceRequired)
                 {
@@ -264,7 +267,7 @@ namespace BoxField
 
                     Box b1 = new Box(columnBoxLocation - generalDistanceRequired + transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
                     boxList.Add(b1);
-                    Box b2 = new Box(columnBoxLocation + 150 + generalDistanceRequired - transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
+                    Box b2 = new Box(columnBoxLocation + rightColumnBoxLocation + generalDistanceRequired - transitionCounterThing, -boxSize, boxSize, boxSpeed, redValue, greenValue, blueValue);
                     boxList.Add(b2);
                     transitionCounterThing += boxSize;
                     boxCountdown = newBoxCounter;
@@ -373,12 +376,14 @@ namespace BoxField
                 player.Move("left");
                 if (currentPlayerSpeed < maxPlayerSpeed) //&& (Form1.currentScore / 2) % 2 == 0)
                 {
-                    currentPlayerSpeed *= 1.2;
+                    currentPlayerSpeed = currentPlayerSpeed * 8/5;
                     if (currentPlayerSpeed > maxPlayerSpeed)
                     {
                         currentPlayerSpeed = maxPlayerSpeed;
                     }
-                    player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
+                    player.speed = currentPlayerSpeed;
+                    
+                    //player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
                 }
 
                 if (player.x < 0) //if the player is too far to the left
@@ -392,12 +397,14 @@ namespace BoxField
                 player.Move("right");
                 if (currentPlayerSpeed < maxPlayerSpeed) //&& (Form1.currentScore / 2) % 2 == 0)
                 {
-                    currentPlayerSpeed *= 1.2;
+                    currentPlayerSpeed = currentPlayerSpeed * 8/5;
                     if (currentPlayerSpeed > maxPlayerSpeed)
                     {
                         currentPlayerSpeed = maxPlayerSpeed;
                     }
-                    player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
+                    player.speed = currentPlayerSpeed;
+
+                    //player.speed = Convert.ToInt16(Math.Round(currentPlayerSpeed));
                 }
 
                 if (player.x > this.Width - player.size) //if the player is too far to the right
@@ -407,7 +414,7 @@ namespace BoxField
             }
             else if (rightArrowDown == false && leftArrowDown == false)
             {
-                currentPlayerSpeed = 1;
+                currentPlayerSpeed = 2;
             }
 
             //Check for collision between player and boxes
@@ -448,15 +455,15 @@ namespace BoxField
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            SolidBrush boxBrush = new SolidBrush(Color.Black);
             //TODO - draw boxes to screen
             foreach (Box b in boxList)
             {
-                SolidBrush boxBrush = new SolidBrush(Color.FromArgb(b.colourRed, b.colourGreen, b.colourBlue));
+                boxBrush = new SolidBrush(Color.FromArgb(b.colourRed, b.colourGreen, b.colourBlue));
                 e.Graphics.FillRectangle(boxBrush, b.x, b.y, b.size, b.size);
-                Pen outlinePen = new Pen(Color.Black, 2);
+
                 e.Graphics.DrawRectangle(outlinePen, b.x, b.y, b.size, b.size);
             }
-            SolidBrush playerBrush = new SolidBrush(Color.FromArgb(player.colourRed, player.colourGreen, player.colourBlue));
             e.Graphics.FillRectangle(playerBrush, player.x, player.y, player.size, player.size);
         }
     }
